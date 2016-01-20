@@ -1,28 +1,9 @@
-# Compiled Object files
-*.slo
-*.lo
 *.o
-*.obj
 
-# Precompiled Headers
-*.gch
-*.pch
+moc_*.cpp
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+bin/
+obj/
+lib/
 
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+src/CQTiling
