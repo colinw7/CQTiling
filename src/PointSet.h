@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <cmath>
 
 template<class POINT, class DATA>
 class PointData {
