@@ -426,7 +426,7 @@ addSides()
   double da = 2.0*M_PI/numSides();
   double a  = (! (numSides() % 2) ? -da/2.0 : 0.0);
 
-  QPointF p1, p2;
+  QPointF p1;
 
   for (auto i : range(numSides() + 1)) {
     double s = sin(a);
@@ -479,7 +479,7 @@ QRectF
 Shape::
 getBBox() const
 {
-  QRectF r(pos_, QSize(0.01, 0.01));
+  QRectF r(pos_, QSizeF(0.01, 0.01));
 
   for (auto side : sides_)
     r |= side->getBBox();

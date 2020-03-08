@@ -190,6 +190,8 @@ class Side {
    shape_(shape), num_(num), start_(start), end_(end), shapeSide_(-1,-1) {
   }
 
+  Shape *shape() const { return shape_; }
+
   void setNum(int num) { num_ = num; }
   int num() const { return num_; }
 
