@@ -387,13 +387,13 @@ class Canvas : public QWidget {
   void paint(QPainter *p);
 
  private:
-  void resizeEvent(QResizeEvent *);
+  void resizeEvent(QResizeEvent *) override;
 
-  void paintEvent(QPaintEvent *);
+  void paintEvent(QPaintEvent *) override;
 
-  void mouseMoveEvent(QMouseEvent *e);
+  void mouseMoveEvent(QMouseEvent *e) override;
 
-  bool event(QEvent *e);
+  bool event(QEvent *e) override;
 
  public slots:
   void print();

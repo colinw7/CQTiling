@@ -40,7 +40,7 @@ void drawText(QPainter *p, const QPointF &pos, const QString &text,
 
   p->setWorldMatrixEnabled(false);
 
-  //QFont font = p->font();
+  //auto font = p->font();
 
   //font.setPixelSize(14);
 
@@ -50,7 +50,7 @@ void drawText(QPainter *p, const QPointF &pos, const QString &text,
 
   p->setPen(c);
 
-  QPointF pos1 = p->transform().map(pos) +
+  auto pos1 = p->transform().map(pos) +
     QPointF(-fm.width(text)/2.0, (fm.ascent() - fm.descent())/2.0);
 
   p->drawText(pos1, text);
@@ -262,7 +262,7 @@ repeat(int depth)
       if (! ModelUtil::realEq(shape->angle(), repeatShape->angle()))
         continue;
 
-      QPointF d = shape->pos() - repeatShape->pos();
+      auto d = shape->pos() - repeatShape->pos();
 
       for (auto shape1 : repeatShapes) {
         Shape *shape2 = shape1->dup();
@@ -348,7 +348,7 @@ drawDual(QPainter *p, const QPointF &point, const std::set<Shape *> &shapes)
   std::vector<QPointF> points;
 
   for (auto shape : shapes) {
-    QPointF p = scalePoint(shape->pos(), 0.1, point);
+    auto p = scalePoint(shape->pos(), 0.1, point);
 
     points.push_back(p);
   }
@@ -432,7 +432,7 @@ addSides()
     double s = sin(a);
     double c = cos(a);
 
-    QPointF p2 = QPointF(pos().x() + c, pos().y() + s);
+    auto p2 = QPointF(pos().x() + c, pos().y() + s);
 
     if (i > 0)
       sides_.push_back(new Side(this, i - 1, p1, p2));
@@ -517,11 +517,11 @@ updatePoly() const
   QVector<QPointF> points, ipoints;
 
   for (auto side : sides_) {
-    QPointF p = side->start();
+    auto p = side->start();
 
     points.push_back(p);
 
-    QPointF ip = scalePoint(p, 0.1, pos());
+    auto ip = scalePoint(p, 0.1, pos());
 
     ipoints.push_back(ip);
   }
@@ -537,7 +537,7 @@ updateSides()
   numOccupied_ = 0;
 
   for (auto side : sides_) {
-    QPointF p = side->mid() + 0.01*side->vector(pos());
+    auto p = side->mid() + 0.01*side->vector(pos());
 
     Shape *shape = model_->getShapeAtPos(p);
     if (! shape) continue;
@@ -571,7 +571,7 @@ QString
 Shape::
 tip() const
 {
-  QString str = QString("%1:").arg(id());
+  auto str = QString("%1:").arg(id());
 
   for (auto side : sides_) {
     if (! side->hasShapeSide())
@@ -735,7 +735,7 @@ addShapes(int id)
 
     auto shapeIds1 = model_->addShapesToSides({shapeId}, range(5), 4);
 
-    for (auto i : range(8)) {
+    for (auto _ : range(8)) {
       auto shapeIds2 = model_->addShapesToSides(shapeIds1, {2}, 5);
            shapeIds1 = model_->addShapesToSides(shapeIds2, {2}, 4);
     }
@@ -822,7 +822,7 @@ void
 Canvas::
 addPropeties(CQPropertyTree *tree)
 {
-  CQPropertyIntegerEditor *iedit = new CQPropertyIntegerEditor;
+  auto *iedit = new CQPropertyIntegerEditor;
 
   tree->addProperty("Canvas", this, "modelNum"   )->setEditorFactory(iedit);
   tree->addProperty("Canvas", this, "scale"      );
@@ -865,7 +865,7 @@ paint(QPainter *p)
 
   p->fillRect(QRect(0, 0, w_, h_), QBrush(model_->bgColor()));
 
-  QRectF r = model_->getBBox();
+  auto r = model_->getBBox();
 
   double s = std::max(r.width(), r.height());
 
@@ -893,14 +893,14 @@ Canvas::
 event(QEvent *e)
 {
   if (e->type() == QEvent::ToolTip) {
-    QHelpEvent *helpEvent = static_cast<QHelpEvent *>(e);
+    auto *helpEvent = static_cast<QHelpEvent *>(e);
 
-    QPointF p = itransform_.map(QPointF(helpEvent->pos()));
+    auto p = itransform_.map(QPointF(helpEvent->pos()));
 
     Shape *shape = model_->getShapeAtPos(p);
 
     if (shape) {
-      QRectF rect = transform_.mapRect(shape->getBBox());
+      auto rect = transform_.mapRect(shape->getBBox());
 
       QToolTip::showText(helpEvent->globalPos(), shape->tip(), this, rect.toRect());
     }
@@ -929,10 +929,10 @@ print()
 Dialog::
 Dialog()
 {
-  QHBoxLayout *layout = new QHBoxLayout(this);
+  auto *layout = new QHBoxLayout(this);
   layout->setMargin(2); layout->setSpacing(2);
 
-  QSplitter *splitter = new QSplitter;
+  auto *splitter = new QSplitter;
 
   Canvas *canvas = new Canvas;
 
@@ -940,25 +940,25 @@ Dialog()
 
   splitter->addWidget(canvas);
 
-  QFrame *rframe = new QFrame;
+  auto *rframe = new QFrame;
 
   rframe->setMinimumWidth(275);
 
-  QVBoxLayout *rlayout = new QVBoxLayout(rframe);
+  auto *rlayout = new QVBoxLayout(rframe);
   rlayout->setMargin(2); rlayout->setSpacing(2);
 
-  CQPropertyTree *tree = new CQPropertyTree;
+  auto *tree = new CQPropertyTree;
 
   canvas->addPropeties(tree);
 
   rlayout->addWidget(tree);
 
-  QFrame *buttonFrame = new QFrame;
+  auto *buttonFrame = new QFrame;
 
-  QHBoxLayout *buttonLayout = new QHBoxLayout(buttonFrame);
+  auto *buttonLayout = new QHBoxLayout(buttonFrame);
   buttonLayout->setMargin(2); buttonLayout->setSpacing(2);
 
-  QPushButton *printButton = new QPushButton("Print");
+  auto *printButton = new QPushButton("Print");
 
   connect(printButton, SIGNAL(clicked()), canvas, SLOT(print()));
 
