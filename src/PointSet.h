@@ -14,16 +14,16 @@ class PointData {
      tol_(tol) {
     }
 
-    bool operator()(const POINT &p1, const POINT &p2) {
+    bool operator()(const POINT &p1, const POINT &p2) const {
       return (less(p1.x(), p2.x()) || (equal(p1.x(), p2.x()) && less(p1.y(), p2.y())));
     }
 
    private:
-    bool less(double a, double b) {
+    bool less(double a, double b) const {
       return ! equal(a, b) && a < b;
     }
 
-    bool equal(double a, double b) {
+    bool equal(double a, double b) const {
       return (fabs(a - b) < tol_);
     }
 
@@ -54,7 +54,7 @@ class PointData {
   }
 
   void addData(const POINT &point, const DATA &data) {
-    typename Points::iterator p = points_.find(point);
+    auto p = points_.find(point);
 
     if (p == points_.end())
       p = points_.insert(p, typename Points::value_type(point, DataSet()));
@@ -67,7 +67,7 @@ class PointData {
   }
 
   const DATA &getData(const POINT &point) const {
-    typename Points::const_iterator p = points_.find(point);
+    auto p = points_.find(point);
 
     assert(p != points_.end());
 

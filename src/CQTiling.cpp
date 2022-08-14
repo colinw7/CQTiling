@@ -141,7 +141,7 @@ createShape(int numSides)
 {
   Shape *shape = new Shape(this, numSides, colors[numSides]);
 
-  shape->setId(shapes_.size());
+  shape->setId(int(shapes_.size()));
 
   return shape;
 }
@@ -267,7 +267,7 @@ repeat(int depth)
       for (auto shape1 : repeatShapes) {
         Shape *shape2 = shape1->dup();
 
-        shape2->setId(shapes_.size());
+        shape2->setId(int(shapes_.size()));
 
         shape2->translate(d);
 
@@ -735,7 +735,8 @@ addShapes(int id)
 
     auto shapeIds1 = model_->addShapesToSides({shapeId}, range(5), 4);
 
-    for (auto _ : range(8)) {
+    for (auto i : range(8)) {
+      assert(i >= 0);
       auto shapeIds2 = model_->addShapesToSides(shapeIds1, {2}, 5);
            shapeIds1 = model_->addShapesToSides(shapeIds2, {2}, 4);
     }

@@ -19,7 +19,7 @@ class PointAngleCmp {
    c_(c) {
   }
 
-  bool operator()(const QPointF &p1, const QPointF &p2) {
+  bool operator()(const QPointF &p1, const QPointF &p2) const {
     double a1 = atan2(p1.y() - c_.y(), p1.x() - c_.x());
     double a2 = atan2(p2.y() - c_.y(), p2.x() - c_.x());
 
@@ -70,7 +70,7 @@ inline QPointF scalePoint(const QPointF &p, double s, const QPointF &o=QPointF(0
 }
 
 inline std::vector<int> range(int n, int i=0) {
-  std::vector<int> v(n);
+  auto v = std::vector<int>(uint(n));
 
   std::iota(v.begin(), v.end(), i);
 
@@ -129,7 +129,7 @@ class Model : public QObject {
 
   QRectF getBBox() const;
 
-  Shape *getShape(int shapeId) const { return shapes_[shapeId]; }
+  Shape *getShape(int shapeId) const { return shapes_[uint(shapeId)]; }
 
   Shape *getShapeAtPos(const QPointF &p) const;
 
@@ -289,8 +289,8 @@ class Shape : public QObject {
 
   const Sides &sides() const { return sides_; }
 
-  const Side &side(int sideNum) const { return *sides_[sideNum]; }
-  Side &side(int sideNum) { return *sides_[sideNum]; }
+  const Side &side(int sideNum) const { return *sides_[uint(sideNum)]; }
+  Side &side(int sideNum) { return *sides_[uint(sideNum)]; }
 
   const QColor &color() const { return c_; }
 
