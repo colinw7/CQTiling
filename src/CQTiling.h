@@ -46,7 +46,7 @@ class Rect : public QRectF {
   double getTop   () const { return bottom(); }
 };
 
-typedef CQuadTree<Shape,Rect> ShapeQuadTree;
+typedef CQuadTree<Shape, Rect> ShapeQuadTree;
 
 namespace ModelUtil {
 
@@ -62,7 +62,7 @@ inline bool realEq(double r1, double r2) {
   return fabs(r2 - r1) < 1E-3;
 }
 
-inline QPointF scalePoint(const QPointF &p, double s, const QPointF &o=QPointF(0,0)) {
+inline QPointF scalePoint(const QPointF &p, double s, const QPointF &o=QPointF(0, 0)) {
   QPointF v = p - o;
   double  l = hypot(v);
 
@@ -167,7 +167,7 @@ class Model : public QObject {
 
 //---
 
-typedef std::pair<QPointF,QPointF> SideVector;
+typedef std::pair<QPointF, QPointF> SideVector;
 
 //---
 
@@ -187,7 +187,7 @@ struct ShapeSide {
 class Side {
  public:
   Side(Shape *shape, int num=0, const QPointF &start=QPointF(), const QPointF &end=QPointF()) :
-   shape_(shape), num_(num), start_(start), end_(end), shapeSide_(-1,-1) {
+   shape_(shape), num_(num), start_(start), end_(end), shapeSide_(-1, -1) {
   }
 
   Shape *shape() const { return shape_; }

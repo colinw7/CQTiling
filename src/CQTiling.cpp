@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QPainter>
+#include <QPainterPath>
 #include <QHelpEvent>
 #include <QToolTip>
 #include <cassert>
@@ -51,7 +52,7 @@ void drawText(QPainter *p, const QPointF &pos, const QString &text,
   p->setPen(c);
 
   auto pos1 = p->transform().map(pos) +
-    QPointF(-fm.width(text)/2.0, (fm.ascent() - fm.descent())/2.0);
+    QPointF(-fm.horizontalAdvance(text)/2.0, (fm.ascent() - fm.descent())/2.0);
 
   p->drawText(pos1, text);
 
@@ -232,7 +233,7 @@ placeShape(Shape *shape, int sideNum, Shape *shape1)
 
   shape1->scale(l);
 
-  double l2 = ModelUtil::dist(QPointF(0,0), side1.mid());
+  double l2 = ModelUtil::dist(QPointF(0, 0), side1.mid());
 
   shape1->translate(side.mid() + l2*side.vector(shape->pos()));
 
@@ -342,7 +343,7 @@ void
 Model::
 drawDual(QPainter *p, const QPointF &point, const std::set<Shape *> &shapes)
 {
-  p->setPen(QPen(QColor(255,0,0), 0.03));
+  p->setPen(QPen(QColor(255, 0, 0), 0.03));
   p->drawPoint(point);
 
   std::vector<QPointF> points;
@@ -370,7 +371,7 @@ drawDual(QPainter *p, const QPointF &point, const std::set<Shape *> &shapes)
     if (borderWidth() > 0.0)
       p->setPen(QPen(borderColor(), borderWidth()));
     else
-      p->setPen(QPen(QColor(0,0,0,0)));
+      p->setPen(QPen(QColor(0, 0, 0, 0)));
 
     p->setBrush(QColor("#477984"));
 
@@ -601,7 +602,7 @@ draw(QPainter *p)
   if (model_->borderWidth() > 0.0)
     p->setPen(QPen(model_->borderColor(), model_->borderWidth()));
   else
-    p->setPen(QPen(QColor(0,0,0,0)));
+    p->setPen(QPen(QColor(0, 0, 0, 0)));
 
   p->setBrush(c_);
 
@@ -610,7 +611,7 @@ draw(QPainter *p)
   //---
 
   if (model_->showSides()) {
-    p->setPen(QPen(QColor(255,0,0), 0.03));
+    p->setPen(QPen(QColor(255, 0, 0), 0.03));
 
     for (auto side : sides_) {
       if (side->hasShapeSide()) continue;
