@@ -322,7 +322,7 @@ getShapeAtPos(const QPointF &p) const
     if (shape->contains(p))
       return shape;
 
-  return 0;
+  return nullptr;
 }
 
 void

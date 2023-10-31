@@ -362,7 +362,7 @@ class Canvas : public QWidget {
   Q_PROPERTY(QSize  printSize   READ printSize   WRITE setPrintSize  )
 
  public:
-  Canvas(QWidget *parent=0);
+  Canvas(QWidget *parent=nullptr);
  ~Canvas();
 
   int modelNum() const { return modelNum_; }
